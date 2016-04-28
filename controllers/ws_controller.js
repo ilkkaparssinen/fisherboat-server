@@ -53,6 +53,8 @@ function ping(ws) {
 }
 function subscribe(ws, data) {
   try {
+    console.log("Subscribe");
+    console.log(data);
 
     var subs = {};
     subs.type = data.type;
@@ -74,6 +76,7 @@ function subscribe(ws, data) {
 }
 
 function sendStatus(ws, topic) {
+    console.log("Send status:" + topic);
   var message = Object.assign({}, boats[topic].status);
   message.topic = topic;
   message.action = "STATUS";
@@ -97,6 +100,8 @@ function unsubscribe(ws) {
 
 function receiveSettings(ws, data) {
   var boat = boats[data.topic];
+  console.log("Receive settings");
+  console.log(data);
   if (!boat) {
     console.log("Unknown boat at receive settings");
     console.log(data);
@@ -118,6 +123,8 @@ function receiveSettings(ws, data) {
 
 function receiveStatus(ws, data) {
   var boat = boats[data.topic];
+  console.log("Receive status");
+  console.log(data);
   if (!boat) {
     console.log("Unknown boat at receive status");
     console.log(data);
@@ -131,7 +138,7 @@ function receiveStatus(ws, data) {
   // Send status to all subscribers
   for (var i = 0; i < subscriptions.length; i++) {
     var subs = subscriptions[i];
-    if (subs[i].type === "CLIENT" && data.topic === subs.topic) {
+    if (subs.type === "CLIENT" && data.topic === subs.topic) {
       sendStatus(subs.ws, subs.topic);
     }
   }
