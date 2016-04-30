@@ -43,6 +43,8 @@ module.exports.connection = function (ws) {
     }
 
   });
+  ws.on('error', function(e) { console.log('Got an error'); });
+  
   ws.on('close', function close() {
     unsubscribe(ws);
     console.log('disconnected');
