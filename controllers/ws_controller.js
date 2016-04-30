@@ -141,7 +141,7 @@ function passClients(ws, data) {
   for (var i = 0; i < subscriptions.length; i++) {
     var subs = subscriptions[i];
     if (subs.type === "CLIENT" && data.topic === subs.topic) {
-      ws.send(JSON.stringify(data));
+      subs.ws.send(JSON.stringify(data));
 
     }
   }
