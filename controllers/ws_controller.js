@@ -18,8 +18,7 @@ var boats = [];
 module.exports.connection = function (ws) {
   console.log("Connected");
   ws.on('message', function incoming(message) {
-    console.log("Message");
-    console.log(message);
+    console.log("Message:" + message.substr(0,100));
 
     try {
       var data = JSON.parse(message);
@@ -39,7 +38,6 @@ module.exports.connection = function (ws) {
       if (data.action === "SETTINGS") {
         receiveSettings(ws, data);
       }
-      console.log('received: %s', message);
     } catch (err) {
       console.log(err);
     }
@@ -125,10 +123,8 @@ function receiveSettings(ws, data) {
 function passClients(ws, data) {
   var boat = boats[data.topic];
   console.log("Pass data to clients (probably image)");
-  console.log(data);
   if (!boat) {
-    console.log("Unknown boat at receive image");
-    console.log(data);
+    console.log("Unknown boat at pass Clients");
     return;
   }
   // Copy settings execept topc and action field
