@@ -18,7 +18,7 @@ var boats = [];
 module.exports.connection = function (ws) {
   console.log("Connected");
   ws.on('message', function incoming(message) {
-    console.log("Message:" + message.substr(0,100));
+    console.log("Message:");
 
     try {
       var data = JSON.parse(message);
@@ -27,24 +27,30 @@ module.exports.connection = function (ws) {
         ping(ws);
       }
       if (data.action === "SUBSCRIBE") {
+        console.log(data);
         subscribe(ws, data);
       }
       if (data.action === "STATUS") {
+        console.log(data);
         receiveStatus(ws, data);
       }
       if (data.action === "IMAGE") {
+        console.log("IMAGE");
         passClients(ws, data);
       }
       if (data.action === "SETTINGS") {
+        console.log(data);
         receiveSettings(ws, data);
       }
     } catch (err) {
+      console.log("ERROR IN WS MESSAGE");
+      console.log(data);
       console.log(err);
     }
 
   });
   ws.on('error', function(e) { console.log('Got an error'); });
-  
+
   ws.on('close', function close() {
     unsubscribe(ws);
     console.log('disconnected');
