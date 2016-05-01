@@ -183,7 +183,7 @@ function receiveStatus(ws, data) {
     }
   }
 }
-
+/*  
 // Just put random data to T
 var the_interval = 5 * 1000;
 setInterval(function () {
@@ -211,3 +211,4 @@ setInterval(function () {
 
 
 }, the_interval);
+*/
