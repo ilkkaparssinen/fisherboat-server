@@ -130,7 +130,7 @@ function receiveSettings(ws, data) {
   delete boat.settings.action;
 
   for (var i = 0; i < subscriptions.length; i++) {
-    var subs = subscription[i];
+    var subs = subscriptions[i];
     if (ws != subs.ws && data.topic === subs.topic) {
       try {
         sendSettings(subs.ws, subs.topic);
