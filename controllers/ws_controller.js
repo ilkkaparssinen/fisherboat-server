@@ -89,14 +89,22 @@ function sendStatus(ws, topic) {
   var message = Object.assign({}, boats[topic].status);
   message.topic = topic;
   message.action = "STATUS";
-  ws.send(JSON.stringify(message));
+  try {
+    ws.send(JSON.stringify(message));
+  } catch (err) {
+    console.log(err);
+  }
 }
 
 function sendSettings(ws, topic) {
   var message = Object.assign({}, boats[topic].settings);
   message.topic = topic;
   message.action = "SETTINGS";
-  ws.send(JSON.stringify(message));
+  try {
+    ws.send(JSON.stringify(message));
+  } catch (err) {
+    console.log(err);
+  }
 }
 
 function unsubscribe(ws) {
@@ -124,7 +132,10 @@ function receiveSettings(ws, data) {
   for (var i = 0; i < subscriptions.length; i++) {
     var subs = subscription[i];
     if (ws != subs.ws && data.topic === subs.topic) {
-      sendSettings(subs.ws, subs.topic);
+      try {
+        sendSettings(subs.ws, subs.topic);
+      } catch (err) {
+      }
     }
   }
 }
@@ -141,7 +152,11 @@ function passClients(ws, data) {
   for (var i = 0; i < subscriptions.length; i++) {
     var subs = subscriptions[i];
     if (subs.type === "CLIENT" && data.topic === subs.topic) {
-      subs.ws.send(JSON.stringify(data));
+      try {
+        subs.ws.send(JSON.stringify(data));
+      } catch (err) {
+        console.log(err);
+      }
 
     }
   }
@@ -174,13 +189,13 @@ var the_interval = 5 * 1000;
 setInterval(function () {
   boats["TEST"] = {
     status: {
-      latitude: Math.random() * 0.001 + 61.6039, longitude: Math.random() * 0.001 + 28.2278, speed: Math.random() * 4.0,
-      track: Math.random() * 360, song: 1, state: 1
+      latitude: Math.random() * 0.001 + 61.6039, longitude: Math.random() * 0.001 + 28.2278, speed: (Math.random() * 4.0).toFixed(1),
+      track: (Math.random() * 360).toFixed(1), song: 1, state: 1
     },
     settings: {
-      speed: Math.random(), turn: Math.random(), speed_change_cycle: 2 + Math.random() * 10,
-      speed_motors_full_percent: Math.random() * 99,
-      low_speed_percent: Math.random() * 99, play_music: false
+      speed: Math.random().toFixed(1), turn: Math.random().toFixed(1), speed_change_cycle: (2 + Math.random() * 10).toFixed(1),
+      speed_motors_full_percent: (Math.random() * 99).toFixed(1),
+      low_speed_percent: (Math.random() * 99).toFixed(1), play_music: false
     }
   };
 
