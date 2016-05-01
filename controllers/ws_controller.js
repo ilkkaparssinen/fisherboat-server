@@ -38,6 +38,10 @@ module.exports.connection = function (ws) {
         console.log("IMAGE");
         passClients(ws, data);
       }
+      if (data.action === "MESSAGE") {
+        console.log("MESSAGE");
+        passClients(ws, data);
+      }
       if (data.action === "SETTINGS") {
         console.log(data);
         receiveSettings(ws, data);
@@ -141,7 +145,7 @@ function receiveSettings(ws, data) {
 }
 function passClients(ws, data) {
   var boat = boats[data.topic];
-  console.log("Pass data to clients (probably image)");
+  console.log("Pass data to clients");
   if (!boat) {
     console.log("Unknown boat at pass Clients");
     return;
@@ -183,7 +187,7 @@ function receiveStatus(ws, data) {
     }
   }
 }
-/*  
+/*
 // Just put random data to T
 var the_interval = 5 * 1000;
 setInterval(function () {
