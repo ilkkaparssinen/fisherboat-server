@@ -34,13 +34,17 @@ module.exports.connection = function (ws) {
         console.log(data);
         receiveStatus(ws, data);
       }
-      if (data.action === "IMAGE") {
-        console.log("IMAGE");
+      if (data.action === "IMAGE" || data.action === "PHOTO") {
+        console.log("IMAGE/PHOTO");
         passClients(ws, data);
       }
       if (data.action === "MESSAGE") {
         console.log("MESSAGE");
         passClients(ws, data);
+      }
+      if (data.action === "TAKEPHOTO") {
+        console.log("TAKEPHOTO");
+        passBoat(ws, data);
       }
       if (data.action === "SETTINGS") {
         console.log(data);
@@ -156,6 +160,28 @@ function passClients(ws, data) {
   for (var i = 0; i < subscriptions.length; i++) {
     var subs = subscriptions[i];
     if (subs.type === "CLIENT" && data.topic === subs.topic) {
+      try {
+        subs.ws.send(JSON.stringify(data));
+      } catch (err) {
+        console.log(err);
+      }
+
+    }
+  }
+}
+function passBoat(ws, data) {
+  var boat = boats[data.topic];
+  console.log("Pass data to boats");
+  if (!boat) {
+    console.log("Unknown boat at pass Clients");
+    return;
+  }
+  // Copy settings execept topc and action field
+
+  // Send status to all subscribers
+  for (var i = 0; i < subscriptions.length; i++) {
+    var subs = subscriptions[i];
+    if (subs.type === "BOAT" && data.topic === subs.topic) {
       try {
         subs.ws.send(JSON.stringify(data));
       } catch (err) {
