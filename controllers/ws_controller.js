@@ -39,7 +39,7 @@ module.exports.connection = function (ws) {
         passClients(ws, data);
       }
       if (data.action === "MESSAGE") {
-        console.log("MESSAGE");
+          console.log("MESSAGE");
         passClients(ws, data);
       }
       if (data.action === "TAKEPHOTO") {
