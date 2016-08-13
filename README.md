@@ -21,7 +21,7 @@ Raspberry Pi in boat, which controls GPS, camera and the motors. Boat is steered
  - Simple node.js websocket solution. This was a quick hack, but it turned out to be surprisingly robust - I just put it running to EC2 and it just keeps running and responsing whenever we test the boat. No problems.
 
 ## Project structure
-  - controllers/websocket.js - contains all web socket pub&sub logic
+  - controllers/ws_controller.js - contains all web socket pub&sub logic
   - app.js - initializes the app. Uses express to server static files from public-directory. If you use project https://github.com/ilkkaparssinen/fisherboat-web, copy the static html + javascript etc. files here.
   - 
 ## Software license:
