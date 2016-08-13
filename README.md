@@ -23,7 +23,7 @@ Raspberry Pi in boat, which controls GPS, camera and the motors. Boat is steered
 ## Project structure
   - controllers/ws_controller.js - contains all web socket pub&sub logic
   - app.js - initializes the app. Uses express to server static files from public-directory. If you use project https://github.com/ilkkaparssinen/fisherboat-web, copy the static html + javascript etc. files here.
-  - 
+
 ## Software license:
  - DWYWDBM-license: Do what you want, don't blame me
 
