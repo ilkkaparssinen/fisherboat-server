@@ -1,5 +1,3 @@
-# Introduction
-
 #Internet enabled Raspberry Pi fishing boat
 
 Raspberry Pi in boat, which controls GPS, camera and the motors. Boat is steered and controlled from web ui.
