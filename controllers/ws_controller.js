@@ -4,7 +4,7 @@
 // Simple subscribe system for boat data
 //
 // Two types of cleints
-// BOAT: = boat (receives SETTINGS, and at startup sends SETTINGS initial values). sends STATUS
+// PI: = Raspberry Pi (receives SETTINGS, and at startup sends SETTINGS initial values). sends STATUS
 // CLIENT = angular client (sends and receives SETTINGS, receives STATUS
 // topic = boat id
 //
@@ -44,6 +44,10 @@ module.exports.connection = function (ws) {
       }
       if (data.action === "TAKEPHOTO") {
         console.log("TAKEPHOTO");
+        passBoat(ws, data);
+      }
+      if (data.action === "EXTERNALPHOTO") {
+        console.log("EXTERNAL PHOTO");
         passBoat(ws, data);
       }
       if (data.action === "SETTINGS") {
@@ -181,7 +185,7 @@ function passBoat(ws, data) {
   // Send status to all subscribers
   for (var i = 0; i < subscriptions.length; i++) {
     var subs = subscriptions[i];
-    if (subs.type === "BOAT" && data.topic === subs.topic) {
+    if (subs.type === "PI" && data.topic === subs.topic) {
       try {
         subs.ws.send(JSON.stringify(data));
       } catch (err) {

@@ -34,11 +34,12 @@ app.use(function(err, req, res, next) {
 
 app.use(cookieParser());
 var favicon = require('serve-favicon');
-
+/*
 var server = app.listen(80, function () {
   var host = server.address().address;
   var port = server.address().port;
 
   console.log('Web content server listening at http://%s:%s', host, port);
-});
+})
+*/
 
